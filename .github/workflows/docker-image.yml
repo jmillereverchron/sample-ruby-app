@@ -1,0 +1,58 @@
+name: Unit Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  mocha:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+      - run: |
+          ls -ltr
+          touch test1.txt
+  rubocop:
+  #  needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+      - run: |
+          ls -ltr
+          touch test2.txt
+  brakeman:
+  #  needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+      - run: |
+          ls -ltr
+          touch test3.txt
+          ls -ltr
+#   sonarcloud:
+#     name: SonarCloud
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+#       - uses: satackey/action-docker-layer-caching@v0.0.11
+#       - name: SonarCloud Scan
+#         uses: SonarSource/sonarcloud-github-action@master
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#   slack:
+#     needs: [ mocha, rubocop, brakeman, sonarcloud ]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: satackey/action-docker-layer-caching@v0.0.11
+#       - uses: iRoachie/slack-github-actions@v2.3.0
+#         env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#         with:
+#           status: ${{ job.status }}
+#         if: ${{ always() }}
+
